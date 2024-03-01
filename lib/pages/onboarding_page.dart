@@ -1,3 +1,4 @@
+import 'package:bank_sha/pages/widgets/custom-button.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -92,34 +93,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     currentIndex == 2
                         ? Column(
                             children: [
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: blueColor,
-                                  elevation: 0,
-                                  minimumSize: const Size(double.infinity, 50),
-                                ),
-                                child: Text(
-                                  'Get Started',
-                                  style: whiteTextStyle.copyWith(
-                                    fontSize: 16,
-                                    fontWeight: semiBold,
-                                  ),
-                                ),
+                              CustomButton(
+                                text: 'Get Started',
+                                ontap: () {},
                               ),
-                              const SizedBox(height: 10),
-                              TextButton(
-                                onPressed: () {},
-                                style: TextButton.styleFrom(
-                                  padding: EdgeInsets.zero,
-                                ),
-                                child: Text(
-                                  'Sign In',
-                                  style: whiteTextStyle.copyWith(
-                                    fontSize: 16,
-                                    color: darkGrayColor,
-                                  ),
-                                ),
+                              const SizedBox(height: 30),
+                              CustomTextButton(
+                                text: 'Sign In',
+                                ontap: () {
+                                  Navigator.pushNamed(context, '/sign-in');
+                                },
                               )
                             ],
                           )
@@ -165,23 +148,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               ),
                               const Spacer(),
                               // Button
-                              ElevatedButton(
-                                onPressed: () {
+                              CustomButton(
+                                text: 'Continue',
+                                ontap: () {
                                   carouselController.nextPage();
                                 },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: blueColor,
-                                  elevation: 0,
-                                  minimumSize: const Size(150, 50),
-                                ),
-                                child: Text(
-                                  'Continue',
-                                  style: whiteTextStyle.copyWith(
-                                    fontSize: 16,
-                                    fontWeight: semiBold,
-                                  ),
-                                ),
-                              ),
+                                width: 150,
+                              )
                             ],
                           )
                   ],

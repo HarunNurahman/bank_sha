@@ -11,6 +11,7 @@ Color blueColor = const Color(0xFF5142E6);
 Color navyColor = const Color(0xFF1A1D2E);
 Color cyanColor = const Color(0xFF53C1F9);
 Color greenColor = const Color(0xFF22B07D);
+Color redColor = const Color(0xFFFF1E39);
 
 Color lightBackgroundColor = const Color(0xFFF6F8FB);
 Color darkBackgroundColor = const Color(0xFF020518);

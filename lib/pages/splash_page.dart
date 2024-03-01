@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bank_sha/pages/onboarding_page.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +14,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     Timer(const Duration(seconds: 2), () {
-      Navigator.push(
+      Navigator.pushNamed(
         context,
-        MaterialPageRoute(builder: (context) => const OnboardingPage()),
+        '/onboarding',
+        // (route) => false,
       );
     });
     super.initState();
