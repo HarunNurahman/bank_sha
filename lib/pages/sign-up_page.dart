@@ -3,8 +3,8 @@ import 'package:bank_sha/pages/widgets/custom-textfield.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
-class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class SignInPage extends StatelessWidget {
           Container(
             width: 155,
             height: 50,
-            margin: const EdgeInsets.only(top: 100, bottom: 100),
+            margin: const EdgeInsets.only(top: 100, bottom: 80),
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/app_logo_dark.png'),
@@ -26,7 +26,7 @@ class SignInPage extends StatelessWidget {
           ),
           // Title
           Text(
-            'Sign In &\nGrow Your Finance',
+            'Join Us to Unlock\nYour Growth',
             style: blackTextStyle.copyWith(
               fontSize: 20,
               fontWeight: semiBold,
@@ -43,6 +43,7 @@ class SignInPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const CustomTextField(text: 'Full Name'),
                 // Email input
                 const CustomTextField(
                   text: 'Email Address',
@@ -54,39 +55,24 @@ class SignInPage extends StatelessWidget {
                   text: 'Password',
                   obscureText: true,
                 ),
-                const SizedBox(height: 8),
-                // Forgot password
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      'Forgot Password',
-                      style: blueTextStyle.copyWith(color: cyanColor),
-                    ),
-                  ),
-                ),
                 const SizedBox(height: 30),
-                // Sign in button
+                // Continue button
                 CustomButton(
-                  text: 'Sign In',
-                  ontap: () => Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/home',
-                    (route) => false,
-                  ),
+                  text: 'Continue',
+                  ontap: () => Navigator.pushNamed(context, '/sign-up-profile'),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 30),
-          // Sign up
+          const SizedBox(height: 15),
+          // Sign in
           Center(
             child: CustomTextButton(
-              text: 'Create New Account',
-              ontap: () => Navigator.pushNamed(context, '/sign-up'),
+              text: 'Sign In',
+              ontap: () => Navigator.pushNamed(context, '/sign-in'),
             ),
-          )
+          ),
+          const SizedBox(height: 15),
         ],
       ),
     );

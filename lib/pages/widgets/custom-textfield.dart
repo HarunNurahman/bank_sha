@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final TextEditingController? controller;
   final bool obscureText;
+  final int maxLength;
 
   const CustomTextField({
     super.key,
@@ -13,6 +14,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.controller,
     this.obscureText = false,
+    this.maxLength = 256,
   });
 
   @override
@@ -26,11 +28,13 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           keyboardType: keyboardType,
           obscureText: obscureText,
+          maxLength: maxLength,
           style: blackTextStyle.copyWith(
             fontSize: 14,
             fontWeight: medium,
           ),
           decoration: InputDecoration(
+            counterText: '',
             contentPadding: const EdgeInsets.all(12),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),

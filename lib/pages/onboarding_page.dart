@@ -95,14 +95,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             children: [
                               CustomButton(
                                 text: 'Get Started',
-                                ontap: () {},
+                                ontap: () => Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  '/sign-up',
+                                  (route) => false,
+                                ),
                               ),
                               const SizedBox(height: 30),
                               CustomTextButton(
                                 text: 'Sign In',
-                                ontap: () {
-                                  Navigator.pushNamed(context, '/sign-in');
-                                },
+                                ontap: () => Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  '/sign-in',
+                                  (route) => false,
+                                ),
                               )
                             ],
                           )

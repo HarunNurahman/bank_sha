@@ -14,10 +14,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     Timer(const Duration(seconds: 2), () {
-      Navigator.pushNamed(
+      Navigator.pushNamedAndRemoveUntil(
         context,
         '/onboarding',
-        // (route) => false,
+        (route) => false,
       );
     });
     super.initState();
