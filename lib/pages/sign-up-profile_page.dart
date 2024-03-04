@@ -2,7 +2,6 @@ import 'package:bank_sha/pages/widgets/custom-button.dart';
 import 'package:bank_sha/pages/widgets/custom-textfield.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SignUpProfilePage extends StatelessWidget {
   const SignUpProfilePage({super.key});
