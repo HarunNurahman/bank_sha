@@ -70,11 +70,13 @@ class SignInPage extends StatelessWidget {
                 // Sign in button
                 CustomButton(
                   text: 'Sign In',
-                  ontap: () => Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/home',
-                    (route) => false,
-                  ),
+                  ontap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/home',
+                      (route) => false,
+                    );
+                  },
                 ),
               ],
             ),
