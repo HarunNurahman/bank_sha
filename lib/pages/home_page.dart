@@ -1,4 +1,7 @@
+import 'package:bank_sha/pages/widgets/blog_item.dart';
+import 'package:bank_sha/pages/widgets/latest-transaction_item.dart';
 import 'package:bank_sha/pages/widgets/service_item.dart';
+import 'package:bank_sha/pages/widgets/user_item.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -80,6 +83,8 @@ class HomePage extends StatelessWidget {
           progressBar(),
           services(),
           latestTransaction(),
+          sendAgain(),
+          appBlog(),
         ],
       ),
     );
@@ -324,7 +329,129 @@ class HomePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: whiteColor,
             ),
+            child: const Column(
+              children: [
+                LatestTransactionItem(
+                  iconUrl: 'assets/icons/ic_transaction_topup.png',
+                  title: 'Top Up',
+                  dateTime: 'Yesterday',
+                  value: '500.000',
+                ),
+                LatestTransactionItem(
+                  iconUrl: 'assets/icons/ic_transaction_reward.png',
+                  title: 'Reward',
+                  dateTime: '11 Sep 2023',
+                  value: '20.000',
+                ),
+                LatestTransactionItem(
+                  iconUrl: 'assets/icons/ic_transaction_withdraw.png',
+                  title: 'Withdraw',
+                  dateTime: '2 Sep 2023',
+                  value: '100.000',
+                ),
+                LatestTransactionItem(
+                  iconUrl: 'assets/icons/ic_transaction_transfer.png',
+                  title: 'Transfer',
+                  dateTime: '27 Aug 2023',
+                  value: '1.200.000',
+                ),
+                LatestTransactionItem(
+                  iconUrl: 'assets/icons/ic_transaction_shopping.png',
+                  title: 'Tokopedia',
+                  dateTime: '9 Jul 2023',
+                  value: '50.000',
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget sendAgain() {
+    return Container(
+      margin: const EdgeInsets.only(top: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Send Again',
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: semiBold,
+            ),
+          ),
+          const SizedBox(height: 14),
+          // Send again list
+          const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                UserItem(
+                  imgUrl: 'assets/images/img_friend-1.png',
+                  username: 'yuanita',
+                ),
+                UserItem(
+                  imgUrl: 'assets/images/img_friend-2.png',
+                  username: 'jani',
+                ),
+                UserItem(
+                  imgUrl: 'assets/images/img_friend-3.png',
+                  username: 'urip',
+                ),
+                UserItem(
+                  imgUrl: 'assets/images/img_friend-4.png',
+                  username: 'musa',
+                ),
+              ],
+            ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget appBlog() {
+    return Container(
+      margin: const EdgeInsets.only(top: 30, bottom: 50),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Friendly Tips',
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: semiBold,
+            ),
+          ),
+          const SizedBox(height: 14),
+          const Wrap(
+            spacing: 32,
+            runSpacing: 17,
+            children: [
+              BlogItem(
+                imgUrl: 'assets/images/img_tips-1.png',
+                title: 'Best Tips for Using a Credit Card',
+                url: 'https://buildwithangga.com/',
+              ),
+              BlogItem(
+                imgUrl: 'assets/images/img_tips-2.png',
+                title: 'Spot the Good Pie of Finance Model',
+                url: '',
+              ),
+              BlogItem(
+                imgUrl: 'assets/images/img_tips-3.png',
+                title: 'Great Hack to Get Better Advices',
+                url: '',
+              ),
+              BlogItem(
+                imgUrl: 'assets/images/img_tips-4.png',
+                title: 'Save More Penny Buy This Instead',
+                url: '',
+              ),
+            ],
+          ),
         ],
       ),
     );
