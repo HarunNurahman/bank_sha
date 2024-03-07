@@ -1,11 +1,15 @@
 import 'package:bank_sha/pages/home_page.dart';
 import 'package:bank_sha/pages/onboarding_page.dart';
+import 'package:bank_sha/pages/pin_page.dart';
+import 'package:bank_sha/pages/profile-edit_page.dart';
+import 'package:bank_sha/pages/profile_page.dart';
 import 'package:bank_sha/pages/sign-in_page.dart';
 import 'package:bank_sha/pages/sign-up-profile_page.dart';
 import 'package:bank_sha/pages/sign-up-success_page.dart';
 import 'package:bank_sha/pages/sign-up-verify_page.dart';
 import 'package:bank_sha/pages/sign-up_page.dart';
 import 'package:bank_sha/pages/splash_page.dart';
+import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,6 +24,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: lightBackgroundColor,
+        appBarTheme: AppBarTheme(
+          backgroundColor: lightBackgroundColor,
+          elevation: 0,
+          centerTitle: true,
+          iconTheme: IconThemeData(color: blackColor),
+          titleTextStyle: blackTextStyle.copyWith(
+            fontSize: 20,
+            fontWeight: semiBold,
+          ),
+        ),
+      ),
       routes: {
         '/': (context) => const SplashPage(),
         '/onboarding': (context) => const OnboardingPage(),
@@ -29,6 +46,9 @@ class MyApp extends StatelessWidget {
         '/sign-up-verify': (context) => const SignUpVerifyPage(),
         '/sign-up-success': (context) => const SignUpSuccessPage(),
         '/home': (context) => const HomePage(),
+        '/profile': (context) => const ProfilePage(),
+        '/pin': (context) => const PinPage(),
+        '/edit-profile': (context) => const EditProfilePage(),
       },
     );
   }

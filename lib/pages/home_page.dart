@@ -4,6 +4,7 @@ import 'package:bank_sha/pages/widgets/service_item.dart';
 import 'package:bank_sha/pages/widgets/user_item.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,7 +12,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lightBackgroundColor,
       // Bottom navigation bar
       bottomNavigationBar: BottomAppBar(
         color: whiteColor,
@@ -78,7 +78,7 @@ class HomePage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         children: [
-          profileHeader(),
+          profileHeader(context),
           walletCard(),
           progressBar(),
           services(),
@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget profileHeader() {
+  Widget profileHeader(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 40),
       child: Row(
@@ -118,31 +118,34 @@ class HomePage extends StatelessWidget {
             ),
           ),
           // Profile picture
-          Container(
-            width: 60,
-            height: 60,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage('assets/images/img_friend-4.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            // Verified status
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                width: 18,
-                height: 18,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: whiteColor,
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, '/profile'),
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage('assets/images/img_friend-4.png'),
+                  fit: BoxFit.cover,
                 ),
-                child: Center(
-                  child: Icon(
-                    Icons.check_circle,
-                    color: greenColor,
-                    size: 16,
+              ),
+              // Verified status
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 18,
+                  height: 18,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: whiteColor,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.check_circle,
+                      color: greenColor,
+                      size: 16,
+                    ),
                   ),
                 ),
               ),
