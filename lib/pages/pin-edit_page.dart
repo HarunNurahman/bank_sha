@@ -3,14 +3,14 @@ import 'package:bank_sha/pages/widgets/custom-textfield.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
-class EditProfilePage extends StatelessWidget {
-  const EditProfilePage({super.key});
+class EditPinPage extends StatelessWidget {
+  const EditPinPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: const Text('Edit PIN'),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -26,24 +26,21 @@ class EditProfilePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Username
-                const CustomTextField(text: 'Username'),
-                const SizedBox(height: 16),
-                // Full Name
-                const CustomTextField(text: 'Full Name'),
-                const SizedBox(height: 16),
-                // Email
+                // Old PIN
                 const CustomTextField(
-                  text: 'Email',
-                  keyboardType: TextInputType.emailAddress,
+                  text: 'Old PIN',
+                  keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: 16),
-                // Password
-                const CustomTextField(text: 'Password', obscureText: true),
+                // New PIN
+                const CustomTextField(
+                  text: 'New PIN',
+                  keyboardType: TextInputType.number,
+                ),
                 const SizedBox(height: 30),
                 // Update button
                 CustomButton(
-                  text: 'Update Profile',
+                  text: 'Update PIN',
                   ontap: () => Navigator.pushNamedAndRemoveUntil(
                     context,
                     '/edit-profile-success',
