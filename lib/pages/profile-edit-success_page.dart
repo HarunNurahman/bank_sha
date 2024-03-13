@@ -30,11 +30,11 @@ class ProfileEditSuccessPage extends StatelessWidget {
             ),
             const SizedBox(height: 50),
             CustomButton(
-              text: 'My Profile',
+              text: 'Back to Home',
               ontap: () => Navigator.pushNamedAndRemoveUntil(
                 context,
-                '/profile',
-                (route) => true,
+                '/home',
+                (route) => false,
               ),
               width: 180,
             ),

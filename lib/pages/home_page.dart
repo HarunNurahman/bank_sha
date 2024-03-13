@@ -4,7 +4,6 @@ import 'package:bank_sha/pages/widgets/service_item.dart';
 import 'package:bank_sha/pages/widgets/user_item.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -81,7 +80,7 @@ class HomePage extends StatelessWidget {
           profileHeader(context),
           walletCard(),
           progressBar(),
-          services(),
+          services(context),
           latestTransaction(),
           sendAgain(),
           appBlog(),
@@ -265,7 +264,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget services() {
+  Widget services(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 30),
       child: Column(
@@ -286,7 +285,7 @@ class HomePage extends StatelessWidget {
               ServiceItem(
                 iconUrl: 'assets/icons/ic_topup.png',
                 title: 'Top Up',
-                onTap: () {},
+                onTap: () => Navigator.pushNamed(context, '/topup'),
               ),
               ServiceItem(
                 iconUrl: 'assets/icons/ic_send.png',
