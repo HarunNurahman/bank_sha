@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:bank_sha/pages/widgets/custom-button.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TopupAmountPage extends StatefulWidget {
   const TopupAmountPage({super.key});
@@ -10,10 +14,14 @@ class TopupAmountPage extends StatefulWidget {
 }
 
 class _TopupAmountPageState extends State<TopupAmountPage> {
-  final TextEditingController amountController = TextEditingController();
+  final TextEditingController amountController =
+      TextEditingController(text: '0');
 
   // Add number to pin
   addAmount(String number) {
+    if (amountController.text == '0') {
+      amountController.text = '';
+    }
     setState(() {
       amountController.text = amountController.text + number;
     });
@@ -27,8 +35,28 @@ class _TopupAmountPageState extends State<TopupAmountPage> {
           0,
           amountController.text.length - 1,
         );
+
+        if (amountController.text == '') {
+          amountController.text = '0';
+        }
       });
     }
+  }
+
+  @override
+  void initState() {
+    amountController.addListener(() {
+      final text = amountController.text;
+
+      amountController.value = amountController.value.copyWith(
+        text: NumberFormat.currency(
+          locale: 'id',
+          decimalDigits: 0,
+          symbol: '',
+        ).format(int.parse(text.replaceAll('.', ''))),
+      );
+    });
+    super.initState();
   }
 
   @override
@@ -48,34 +76,35 @@ class _TopupAmountPageState extends State<TopupAmountPage> {
                   fontWeight: semiBold,
                 ),
               ),
-              const SizedBox(height: 67),
+              const SizedBox(height: 50),
               // Amount input form
-              SizedBox(
-                width: 260,
-                child: TextFormField(
-                  controller: amountController,
-                  readOnly: true,
-                  cursorColor: grayColor,
-                  keyboardType: TextInputType.number,
-                  style: whiteTextStyle.copyWith(
-                    fontSize: 36,
-                    fontWeight: medium,
-                  ),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    prefixIcon: Text(
-                      'Rp',
-                      style: whiteTextStyle.copyWith(
-                        fontSize: 36,
-                        fontWeight: medium,
+              Align(
+                child: SizedBox(
+                  width: 260,
+                  child: TextFormField(
+                    controller: amountController,
+                    readOnly: true,
+                    cursorColor: grayColor,
+                    keyboardType: TextInputType.number,
+                    style: whiteTextStyle.copyWith(
+                      fontSize: 36,
+                      fontWeight: medium,
+                    ),
+                    decoration: InputDecoration(
+                      prefixIcon: Text(
+                        'Rp ',
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 36,
+                          fontWeight: medium,
+                        ),
                       ),
-                    ),
-                    counterText: '',
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: grayColor),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: grayColor),
+                      counterText: '',
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: grayColor),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: grayColor),
+                      ),
                     ),
                   ),
                 ),
@@ -146,7 +175,26 @@ class _TopupAmountPageState extends State<TopupAmountPage> {
                     ),
                   ),
                 ],
-              )
+              ),
+              const SizedBox(height: 50),
+              // Checkout button
+              CustomButton(
+                text: 'Checkout Now',
+                ontap: () async {
+                  if (await Navigator.pushNamed(context, '/pin') == true) {
+                    await launchUrl(Uri.parse('https://demo.midtrans.com/'));
+
+                    Timer(const Duration(seconds: 5), () {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/topup-success',
+                        (route) => false,
+                      );
+                    });
+                  }
+                },
+              ),
+              const SizedBox(height: 40)
             ],
           ),
         ],
