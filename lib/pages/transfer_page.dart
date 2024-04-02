@@ -1,5 +1,7 @@
+import 'package:bank_sha/pages/widgets/custom-button.dart';
 import 'package:bank_sha/pages/widgets/custom-textfield.dart';
 import 'package:bank_sha/pages/widgets/transfer-recent-user_item.dart';
+import 'package:bank_sha/pages/widgets/transfer-search-result_item.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +17,18 @@ class TransferPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         children: [
-          // Search bar
           searchBar(),
-          // Recent user
-          recentUser(),
+          // recentUser(),
+          searchResult()
         ],
+      ),
+      // Continue button
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: CustomButton(
+          text: 'Continue',
+          ontap: () => Navigator.pushNamed(context, '/transfer-amount'),
+        ),
       ),
     );
   }
@@ -77,6 +86,44 @@ class TransferPage extends StatelessWidget {
             username: 'shogunmasayoshi',
             onTap: () {},
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget searchResult() {
+    return Container(
+      margin: const EdgeInsets.only(top: 40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Result',
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: semiBold,
+            ),
+          ),
+          const SizedBox(height: 14),
+          const Wrap(
+            spacing: 15,
+            runSpacing: 15,
+            children: [
+              TransferSearchResultItem(
+                imgUrl: 'assets/images/img_friend-1.png',
+                name: 'Yonna Jie',
+                username: 'yoenna',
+                isVerified: true,
+              ),
+              TransferSearchResultItem(
+                imgUrl: 'assets/images/img_friend-2.png',
+                name: 'Yonne Ka',
+                username: 'yoenyu',
+                isVerified: true,
+                isSelected: true,
+              ),
+            ],
+          )
         ],
       ),
     );
