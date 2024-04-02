@@ -16,14 +16,17 @@ class DataProviderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 18),
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: isSelected ? cyanColor : whiteColor,
-          width: 2,
-        ),
+        border: isSelected
+            ? Border.all(
+                color: cyanColor,
+                width: 2,
+              )
+            : null,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

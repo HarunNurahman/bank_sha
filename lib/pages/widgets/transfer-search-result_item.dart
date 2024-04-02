@@ -23,10 +23,12 @@ class TransferSearchResultItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: isSelected ? blueColor : whiteColor,
-          width: 2,
-        ),
+        border: isSelected
+            ? Border.all(
+                color: cyanColor,
+                width: 2,
+              )
+            : null,
       ),
       child: Column(
         children: [

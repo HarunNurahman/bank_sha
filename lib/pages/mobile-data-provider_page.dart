@@ -1,3 +1,4 @@
+import 'package:bank_sha/pages/widgets/custom-button.dart';
 import 'package:bank_sha/pages/widgets/data-provider_item.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,14 @@ class MobileDataPage extends StatelessWidget {
           const SizedBox(height: 40),
           selecProvider(),
         ],
+      ),
+      // Continue button
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: CustomButton(
+          text: 'Continue',
+          ontap: () => Navigator.pushNamed(context, '/transfer-amount'),
+        ),
       ),
     );
   }
@@ -82,6 +91,14 @@ class MobileDataPage extends StatelessWidget {
           imgUrl: 'assets/images/img_provider_telkomsel.png',
           name: 'Telkomsel',
           isSelected: true,
+        ),
+        const DataProviderItem(
+          imgUrl: 'assets/images/img_provider_indosat.png',
+          name: 'Indosat Ooredoo',
+        ),
+        const DataProviderItem(
+          imgUrl: 'assets/images/img_provider_singtel.png',
+          name: 'Singtel ID',
         ),
       ],
     );
