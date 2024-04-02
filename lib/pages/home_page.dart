@@ -300,7 +300,12 @@ class HomePage extends StatelessWidget {
               ServiceItem(
                 iconUrl: 'assets/icons/ic_more.png',
                 title: 'More',
-                onTap: () {},
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const TransactionDialog(),
+                  );
+                },
               ),
             ],
           )
@@ -455,6 +460,77 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class TransactionDialog extends StatelessWidget {
+  const TransactionDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: EdgeInsets.zero,
+      alignment: Alignment.bottomCenter,
+      content: Container(
+        height: 330,
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.all(30),
+        decoration: BoxDecoration(
+          color: lightBackgroundColor,
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Do More With Us',
+              style: blackTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: semiBold,
+              ),
+            ),
+            const SizedBox(height: 13),
+            Wrap(
+              spacing: 28,
+              runSpacing: 28,
+              children: [
+                ServiceItem(
+                  iconUrl: 'assets/icons/ic_product_mobile-data.png',
+                  title: 'Data',
+                  onTap: () => Navigator.pushNamed(context, '/mobile-data'),
+                ),
+                ServiceItem(
+                  iconUrl: 'assets/icons/ic_product_bill.png',
+                  title: 'Bill',
+                  onTap: () {},
+                ),
+                ServiceItem(
+                  iconUrl: 'assets/icons/ic_product_entertainment.png',
+                  title: 'Stream',
+                  onTap: () {},
+                ),
+                ServiceItem(
+                  iconUrl: 'assets/icons/ic_product_subscription.png',
+                  title: 'Movie',
+                  onTap: () {},
+                ),
+                ServiceItem(
+                  iconUrl: 'assets/icons/ic_product_food-drink.png',
+                  title: 'Food',
+                  onTap: () {},
+                ),
+                ServiceItem(
+                  iconUrl: 'assets/icons/ic_product_travel.png',
+                  title: 'Travel',
+                  onTap: () {},
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

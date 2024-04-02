@@ -1,3 +1,4 @@
+import 'package:bank_sha/pages/data-provider_page.dart';
 import 'package:bank_sha/pages/home_page.dart';
 import 'package:bank_sha/pages/onboarding_page.dart';
 import 'package:bank_sha/pages/pin-edit_page.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         '/topup-amount': (context) => const TopupAmountPage(),
         '/topup-success': (context) => const TopupSuccessPage(),
         '/transfer': (context) => const TransferPage(),
+        '/mobile-data': (context) => const MobileDataPage(),
       },
     );
   }
