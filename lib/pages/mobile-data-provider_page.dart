@@ -26,7 +26,7 @@ class MobileDataPage extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         child: CustomButton(
           text: 'Continue',
-          ontap: () => Navigator.pushNamed(context, '/transfer-amount'),
+          ontap: () => Navigator.pushNamed(context, '/mobile-data-package'),
         ),
       ),
     );
