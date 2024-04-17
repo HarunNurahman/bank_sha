@@ -1,5 +1,6 @@
 import 'package:bank_sha/pages/widgets/custom-button.dart';
 import 'package:bank_sha/pages/widgets/data-provider_item.dart';
+import 'package:bank_sha/shared/shared_method.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -64,7 +65,7 @@ class MobileDataPage extends StatelessWidget {
                 const SizedBox(height: 2),
                 // Card balance
                 Text(
-                  'Balance: Rp 180.000.000',
+                  'Balance: ${formatCurrency(125000)}',
                   style: grayTextStyle.copyWith(fontSize: 12),
                 ),
               ],

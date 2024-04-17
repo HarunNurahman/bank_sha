@@ -1,3 +1,4 @@
+import 'package:bank_sha/shared/shared_method.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +43,7 @@ class LatestTransactionItem extends StatelessWidget {
             ),
           ),
           Text(
-            value,
+            formatCurrency(int.parse(value)),
             style: blackTextStyle.copyWith(
               fontSize: 16,
               fontWeight: medium,

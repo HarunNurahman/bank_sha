@@ -2,6 +2,7 @@ import 'package:bank_sha/pages/widgets/blog_item.dart';
 import 'package:bank_sha/pages/widgets/latest-transaction_item.dart';
 import 'package:bank_sha/pages/widgets/service_item.dart';
 import 'package:bank_sha/pages/widgets/user_item.dart';
+import 'package:bank_sha/shared/shared_method.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -197,7 +198,7 @@ class HomePage extends StatelessWidget {
               children: [
                 const TextSpan(text: 'Balance\n'),
                 TextSpan(
-                  text: 'Rp 12.500',
+                  text: formatCurrency(125000),
                   style: whiteTextStyle.copyWith(
                     fontSize: 24,
                     fontWeight: semiBold,
@@ -240,7 +241,7 @@ class HomePage extends StatelessWidget {
                       style: greenTextStyle.copyWith(fontWeight: semiBold),
                     ),
                     TextSpan(
-                      text: 'of Rp 20.000',
+                      text: 'of ${formatCurrency(50000)}',
                       style: blackTextStyle.copyWith(fontWeight: semiBold),
                     ),
                   ],
@@ -342,31 +343,31 @@ class HomePage extends StatelessWidget {
                   iconUrl: 'assets/icons/ic_transaction_topup.png',
                   title: 'Top Up',
                   dateTime: 'Yesterday',
-                  value: '500.000',
+                  value: '500000',
                 ),
                 LatestTransactionItem(
                   iconUrl: 'assets/icons/ic_transaction_reward.png',
                   title: 'Reward',
                   dateTime: '11 Sep 2023',
-                  value: '20.000',
+                  value: '20000',
                 ),
                 LatestTransactionItem(
                   iconUrl: 'assets/icons/ic_transaction_withdraw.png',
                   title: 'Withdraw',
                   dateTime: '2 Sep 2023',
-                  value: '100.000',
+                  value: '100000',
                 ),
                 LatestTransactionItem(
                   iconUrl: 'assets/icons/ic_transaction_transfer.png',
                   title: 'Transfer',
                   dateTime: '27 Aug 2023',
-                  value: '1.200.000',
+                  value: '1200000',
                 ),
                 LatestTransactionItem(
                   iconUrl: 'assets/icons/ic_transaction_shopping.png',
                   title: 'Tokopedia',
                   dateTime: '9 Jul 2023',
-                  value: '50.000',
+                  value: '50000',
                 ),
               ],
             ),
