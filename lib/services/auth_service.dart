@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:bank_sha/models/sign-in_model.dart';
+import 'package:bank_sha/models/sign-up_model.dart';
+import 'package:bank_sha/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
@@ -19,6 +22,46 @@ class AuthService {
       }
     } catch (e) {
       throw Exception(e);
+    }
+  }
+
+  Future<UserModel> signUp(SignUpModel data) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/register'),
+        body: data.toJson(),
+      );
+
+      if (response.statusCode == 200) {
+        UserModel user = UserModel.fromJson(jsonDecode(response.body));
+        user = user.copyWith(password: data.password);
+
+        return user;
+      } else {
+        throw Exception(jsonDecode(response.body)['message']);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<UserModel> signIn(SignInModel data) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/login'),
+        body: data.toJson(),
+      );
+
+      if (response.statusCode == 200) {
+        UserModel user = UserModel.fromJson(jsonDecode(response.body));
+        user = user.copyWith(password: data.password);
+
+        return user;
+      } else {
+        throw Exception(jsonDecode(response.body)['message']);
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }

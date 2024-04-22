@@ -11,7 +11,6 @@ import 'package:bank_sha/pages/profile-edit_page.dart';
 import 'package:bank_sha/pages/profile_page.dart';
 import 'package:bank_sha/pages/sign-in_page.dart';
 import 'package:bank_sha/pages/sign-up-success_page.dart';
-import 'package:bank_sha/pages/sign-up-verify_page.dart';
 import 'package:bank_sha/pages/sign-up_page.dart';
 import 'package:bank_sha/pages/splash_page.dart';
 import 'package:bank_sha/pages/topup-amount_page.dart';
@@ -58,7 +57,6 @@ class MyApp extends StatelessWidget {
           '/onboarding': (context) => const OnboardingPage(),
           '/sign-in': (context) => const SignInPage(),
           '/sign-up': (context) => const SignUpPage(),
-          '/sign-up-verify': (context) => const SignUpVerifyPage(),
           '/sign-up-success': (context) => const SignUpSuccessPage(),
           '/home': (context) => const HomePage(),
           '/profile': (context) => const ProfilePage(),

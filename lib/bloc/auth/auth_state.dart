@@ -20,3 +20,11 @@ final class AuthFailed extends AuthState {
   @override
   List<Object> get props => [errorMessage];
 }
+
+final class AuthSuccess extends AuthState {
+  final UserModel user;
+  const AuthSuccess(this.user);
+
+  @override
+  List<Object> get props => [user];
+}

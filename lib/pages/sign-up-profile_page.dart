@@ -1,12 +1,34 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:bank_sha/models/sign-up_model.dart';
+import 'package:bank_sha/pages/sign-up-verify_page.dart';
 import 'package:bank_sha/pages/widgets/custom-button.dart';
 import 'package:bank_sha/pages/widgets/custom-textfield.dart';
+import 'package:bank_sha/shared/shared_method.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
-class SignUpProfilePage extends StatelessWidget {
+class SignUpProfilePage extends StatefulWidget {
   final SignUpModel data;
   const SignUpProfilePage({super.key, required this.data});
+
+  @override
+  State<SignUpProfilePage> createState() => _SignUpProfilePageState();
+}
+
+class _SignUpProfilePageState extends State<SignUpProfilePage> {
+  TextEditingController pinController = TextEditingController();
+  XFile? selectImage;
+
+  bool validate() {
+    if (pinController.text.isEmpty || pinController.text.length < 6) {
+      return false;
+    }
+
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,35 +67,34 @@ class SignUpProfilePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Upload button
-                // GestureDetector(
-                //   onTap: () {},
-                //   child: Container(
-                //     height: 120,
-                //     width: 120,
-                //     decoration: BoxDecoration(
-                //       shape: BoxShape.circle,
-                //       color: lightGrayColor,
-                //     ),
-                //     child: Center(
-                //       child: Image.asset(
-                //         'assets/icons/ic_upload.png',
-                //         width: 32,
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    final image = await imagePicker();
+                    setState(() {
+                      selectImage = image;
+                    });
+                  },
                   child: Container(
                     height: 120,
                     width: 120,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/img_friend-4.png'),
-                        fit: BoxFit.cover,
-                      ),
+                      color: lightGrayColor,
+                      image: selectImage == null
+                          ? null
+                          : DecorationImage(
+                              image: FileImage(File(selectImage!.path)),
+                              fit: BoxFit.cover,
+                            ),
                     ),
+                    child: selectImage != null
+                        ? null
+                        : Center(
+                            child: Image.asset(
+                              'assets/icons/ic_upload.png',
+                              width: 32,
+                            ),
+                          ),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -87,8 +108,9 @@ class SignUpProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 // PIN input
-                const CustomTextField(
+                CustomTextField(
                   text: 'Set PIN (6 Digits Number)',
+                  controller: pinController,
                   obscureText: true,
                   keyboardType: TextInputType.number,
                   maxLength: 6,
@@ -97,7 +119,27 @@ class SignUpProfilePage extends StatelessWidget {
                 // Continue button
                 CustomButton(
                   text: 'Continue',
-                  ontap: () => Navigator.pushNamed(context, '/sign-up-verify'),
+                  ontap: () {
+                    if (validate()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignUpVerifyPage(
+                            data: widget.data.copyWith(
+                              pin: pinController.text,
+                              profilePicture: selectImage == null
+                                  ? null
+                                  : 'data:image/png;base64,${base64Encode(
+                                      File(selectImage!.path).readAsBytesSync(),
+                                    )}',
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      showCustomSnackBar(context, 'PIN Harus 6 Digit');
+                    }
+                  },
                 ),
               ],
             ),
