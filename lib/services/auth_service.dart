@@ -118,4 +118,21 @@ class AuthService {
     const storage = FlutterSecureStorage();
     await storage.deleteAll();
   }
+
+  Future<void> signOut() async {
+    try {
+      final token = await getToken();
+      final response = await http.post(
+        Uri.parse('$baseUrl/logout'),
+        headers: {'Authorization': token},
+      );
+      if (response.statusCode == 200) {
+        await clearCredential();
+      } else {
+        throw jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
