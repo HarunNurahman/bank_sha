@@ -1,3 +1,4 @@
+import 'package:bank_sha/bloc/auth/auth_bloc.dart';
 import 'package:bank_sha/pages/widgets/blog_item.dart';
 import 'package:bank_sha/pages/widgets/latest-transaction_item.dart';
 import 'package:bank_sha/pages/widgets/service_item.dart';
@@ -5,6 +6,7 @@ import 'package:bank_sha/pages/widgets/user_item.dart';
 import 'package:bank_sha/shared/shared_method.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -91,124 +93,143 @@ class HomePage extends StatelessWidget {
   }
 
   Widget profileHeader(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 40),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Username
-          RichText(
-            text: TextSpan(
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthSuccess) {
+          return Container(
+            margin: const EdgeInsets.only(top: 40),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextSpan(
-                  text: 'Howdy, \n',
-                  style: grayTextStyle.copyWith(
-                    fontSize: 16,
-                    color: darkGrayColor,
+                // Username
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Howdy, \n',
+                        style: grayTextStyle.copyWith(
+                          fontSize: 16,
+                          color: darkGrayColor,
+                        ),
+                      ),
+                      TextSpan(
+                        text: state.user.username.toString(),
+                        style: blackTextStyle.copyWith(
+                          fontSize: 20,
+                          fontWeight: semiBold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                TextSpan(
-                  text: 'Harunamanya',
-                  style: blackTextStyle.copyWith(
-                    fontSize: 20,
-                    fontWeight: semiBold,
+                // Profile picture
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/profile'),
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: state.user.profilePicture == null
+                            ? AssetImage('assets/images/img_friend-4.png')
+                            : NetworkImage(state.user.profilePicture!)
+                                as ImageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    // Verified status
+                    child: state.user.verified == 1
+                        ? Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              width: 18,
+                              height: 18,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: whiteColor,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.check_circle,
+                                  color: greenColor,
+                                  size: 16,
+                                ),
+                              ),
+                            ),
+                          )
+                        : null,
                   ),
-                ),
+                )
               ],
             ),
-          ),
-          // Profile picture
-          GestureDetector(
-            onTap: () => Navigator.pushNamed(context, '/profile'),
-            child: Container(
-              width: 60,
-              height: 60,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage('assets/images/img_friend-4.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              // Verified status
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: 18,
-                  height: 18,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: whiteColor,
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.check_circle,
-                      color: greenColor,
-                      size: 16,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
+          );
+        }
+        return Container();
+      },
     );
   }
 
   Widget walletCard() {
     // Card background
-    return Container(
-      width: double.infinity,
-      height: 220,
-      margin: const EdgeInsets.only(top: 30),
-      padding: const EdgeInsets.all(30),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(28),
-        image: const DecorationImage(
-          image: AssetImage('assets/images/img_card.png'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Card owner
-          Text(
-            'Harun Nurahman',
-            style: whiteTextStyle.copyWith(
-              fontSize: 18,
-              fontWeight: medium,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthSuccess) {
+          return Container(
+            width: double.infinity,
+            height: 220,
+            margin: const EdgeInsets.only(top: 30),
+            padding: const EdgeInsets.all(30),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(28),
+              image: const DecorationImage(
+                image: AssetImage('assets/images/img_card.png'),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          const SizedBox(height: 28),
-          // Card number
-          Text(
-            '**** **** **** 1998',
-            style: whiteTextStyle.copyWith(
-              fontSize: 18,
-              fontWeight: medium,
-              letterSpacing: 6,
-            ),
-          ),
-          const SizedBox(height: 25),
-          // Card balance
-          RichText(
-            text: TextSpan(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TextSpan(text: 'Balance\n'),
-                TextSpan(
-                  text: formatCurrency(125000),
+                // Card owner
+                Text(
+                  state.user.name!,
                   style: whiteTextStyle.copyWith(
-                    fontSize: 24,
-                    fontWeight: semiBold,
+                    fontSize: 18,
+                    fontWeight: medium,
+                  ),
+                ),
+                const SizedBox(height: 28),
+                // Card number
+                Text(
+                  '**** **** **** ${state.user.cardNumber!.substring(12, 16)}',
+                  style: whiteTextStyle.copyWith(
+                    fontSize: 18,
+                    fontWeight: medium,
+                    letterSpacing: 6,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                // Card balance
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      const TextSpan(text: 'Balance\n'),
+                      TextSpan(
+                        text: formatCurrency(state.user.balance!),
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 24,
+                          fontWeight: semiBold,
+                        ),
+                      )
+                    ],
                   ),
                 )
               ],
             ),
-          )
-        ],
-      ),
+          );
+        }
+        return Container();
+      },
     );
   }
 

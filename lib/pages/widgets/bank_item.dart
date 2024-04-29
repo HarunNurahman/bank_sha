@@ -1,15 +1,14 @@
+import 'package:bank_sha/models/payment-method_model.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
 class BankItem extends StatelessWidget {
-  final String imgUrl;
-  final String title;
+  final PaymentMethodModel paymentMethod;
   final VoidCallback? onTap;
   final bool isSelected;
   const BankItem({
     super.key,
-    required this.imgUrl,
-    required this.title,
+    required this.paymentMethod,
     this.onTap,
     this.isSelected = false,
   });
@@ -17,7 +16,7 @@ class BankItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(bottom: 18),
         padding: const EdgeInsets.all(22),
@@ -32,12 +31,12 @@ class BankItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(imgUrl, height: 30),
+            Image.network(paymentMethod.thumbnail.toString(), height: 30),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  title,
+                  paymentMethod.name.toString(),
                   style: blackTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: medium,
