@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bank_sha/bloc/auth/auth_bloc.dart';
 import 'package:bank_sha/bloc/topup/topup_bloc.dart';
 import 'package:bank_sha/models/topup_model.dart';
@@ -90,10 +92,13 @@ class _TopupAmountPageState extends State<TopupAmountPage> {
                     ),
                   );
 
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/topup-success',
-                (route) => false,
+              Timer(
+                Duration(seconds: 3),
+                () => Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/topup-success',
+                  (route) => false,
+                ),
               );
             }
           },
