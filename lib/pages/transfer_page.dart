@@ -1,12 +1,30 @@
+import 'package:bank_sha/bloc/user/user_bloc.dart';
+import 'package:bank_sha/models/user_model.dart';
 import 'package:bank_sha/pages/widgets/custom-button.dart';
 import 'package:bank_sha/pages/widgets/custom-textfield.dart';
 import 'package:bank_sha/pages/widgets/transfer-recent-user_item.dart';
 import 'package:bank_sha/pages/widgets/transfer-search-result_item.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TransferPage extends StatelessWidget {
+class TransferPage extends StatefulWidget {
   const TransferPage({super.key});
+
+  @override
+  State<TransferPage> createState() => _TransferPageState();
+}
+
+class _TransferPageState extends State<TransferPage> {
+  TextEditingController usernameController = TextEditingController();
+  UserModel? selectedUser;
+  late UserBloc userBloc;
+
+  @override
+  void initState() {
+    userBloc = context.read<UserBloc>()..add(GetRecentUser());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +36,19 @@ class TransferPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         children: [
           searchBar(),
-          // recentUser(),
-          searchResult()
+          usernameController.text.isEmpty ? recentUser() : searchResult(),
         ],
       ),
       // Continue button
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: CustomButton(
-          text: 'Continue',
-          ontap: () => Navigator.pushNamed(context, '/transfer-amount'),
-        ),
-      ),
+      bottomNavigationBar: selectedUser != null
+          ? Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: CustomButton(
+                text: 'Continue',
+                ontap: () => Navigator.pushNamed(context, '/transfer-amount'),
+              ),
+            )
+          : null,
     );
   }
 
@@ -47,7 +66,21 @@ class TransferPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          const CustomTextField(text: 'by username', isShowTitle: false),
+          CustomTextField(
+            text: 'by username',
+            controller: usernameController,
+            isShowTitle: false,
+            onFieldSubmitted: (value) {
+              if (value.isNotEmpty) {
+                userBloc.add(GetUserByUsername(usernameController.text));
+              } else {
+                selectedUser = null;
+                userBloc.add(GetRecentUser());
+              }
+
+              setState(() {});
+            },
+          ),
         ],
       ),
     );
@@ -67,25 +100,22 @@ class TransferPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          TransferRecentUserItem(
-            imgUrl: 'assets/images/img_friend-1.png',
-            name: 'Yonna Jie',
-            username: 'yoenna',
-            isVerified: true,
-            onTap: () {},
-          ),
-          TransferRecentUserItem(
-            imgUrl: 'assets/images/img_friend-2.png',
-            name: 'Jane Hi',
-            username: 'jhiane',
-            onTap: () {},
-          ),
-          TransferRecentUserItem(
-            imgUrl: 'assets/images/img_friend-3.png',
-            name: 'Masayoshi',
-            username: 'shogunmasayoshi',
-            onTap: () {},
-          ),
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              if (state is UserSuccess) {
+                return Column(
+                  children: state.users
+                      .map((user) => TransferRecentUserItem(user: user))
+                      .toList(),
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  color: blueColor,
+                ),
+              );
+            },
+          )
         ],
       ),
     );
@@ -105,24 +135,35 @@ class TransferPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          const Wrap(
-            spacing: 15,
-            runSpacing: 15,
-            children: [
-              TransferSearchResultItem(
-                imgUrl: 'assets/images/img_friend-1.png',
-                name: 'Yonna Jie',
-                username: 'yoenna',
-                isVerified: true,
-              ),
-              TransferSearchResultItem(
-                imgUrl: 'assets/images/img_friend-2.png',
-                name: 'Yonne Ka',
-                username: 'yoenyu',
-                isVerified: true,
-                isSelected: true,
-              ),
-            ],
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              if (state is UserSuccess) {
+                return Wrap(
+                  spacing: 24,
+                  runSpacing: 17,
+                  children: state.users
+                      .map(
+                        (user) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedUser = user;
+                            });
+                          },
+                          child: TransferSearchResultItem(
+                            user: user,
+                            isSelected: user.id == selectedUser?.id,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  color: blueColor,
+                ),
+              );
+            },
           )
         ],
       ),

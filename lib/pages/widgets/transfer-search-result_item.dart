@@ -1,24 +1,21 @@
+import 'package:bank_sha/models/user_model.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
 class TransferSearchResultItem extends StatelessWidget {
-  final String imgUrl;
-  final String name;
-  final String username;
-  final bool isVerified;
+  final UserModel user;
   final bool isSelected;
   const TransferSearchResultItem({
     super.key,
-    required this.imgUrl,
-    required this.name,
-    required this.username,
-    this.isVerified = false,
+    required this.user,
     this.isSelected = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 175,
+      width: 155,
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       decoration: BoxDecoration(
         color: whiteColor,
@@ -39,12 +36,14 @@ class TransferSearchResultItem extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: AssetImage(imgUrl),
+                image: user.profilePicture == null
+                    ? const AssetImage('assets/images/img_profile.png')
+                    : NetworkImage(user.profilePicture!) as ImageProvider,
                 fit: BoxFit.cover,
               ),
             ),
             // Verified status
-            child: isVerified
+            child: user.verified == 1
                 ? Align(
                     alignment: Alignment.topRight,
                     child: Container(
@@ -68,7 +67,7 @@ class TransferSearchResultItem extends StatelessWidget {
           const SizedBox(height: 13),
           // Full name
           Text(
-            name,
+            user.name.toString(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: blackTextStyle.copyWith(
@@ -79,7 +78,9 @@ class TransferSearchResultItem extends StatelessWidget {
           const SizedBox(height: 2),
           // Username
           Text(
-            '@$username',
+            '@${user.username}}',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: grayTextStyle.copyWith(fontSize: 12),
           ),
         ],

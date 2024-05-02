@@ -1,19 +1,14 @@
+import 'package:bank_sha/models/user_model.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class TransferRecentUserItem extends StatelessWidget {
-  final String imgUrl;
-  final String name;
-  final String username;
-  final bool isVerified;
+  final UserModel user;
   final VoidCallback? onTap;
   const TransferRecentUserItem({
     super.key,
-    required this.imgUrl,
-    required this.name,
-    required this.username,
-    this.isVerified = false,
+    required this.user,
     this.onTap,
   });
 
@@ -38,7 +33,9 @@ class TransferRecentUserItem extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage(imgUrl),
+                  image: user.profilePicture == null
+                      ? const AssetImage('assets/images/img_profile.png')
+                      : NetworkImage(user.profilePicture!) as ImageProvider,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -49,7 +46,7 @@ class TransferRecentUserItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    user.name.toString(),
                     style: blackTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: medium,
@@ -58,14 +55,14 @@ class TransferRecentUserItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    '@$username',
+                    '@${user.username}',
                     style: grayTextStyle.copyWith(fontSize: 12),
                   )
                 ],
               ),
             ),
             // Verified Status
-            if (isVerified)
+            if (user.verified == 1)
               Row(
                 children: [
                   Icon(

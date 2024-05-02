@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final int maxLength;
   final bool isShowTitle;
+  final Function(String)? onFieldSubmitted;
 
   const CustomTextField({
     super.key,
@@ -17,6 +18,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.maxLength = 256,
     this.isShowTitle = true,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -65,6 +67,7 @@ class CustomTextField extends StatelessWidget {
               ),
             ),
           ),
+          onFieldSubmitted: onFieldSubmitted,
         )
       ],
     );

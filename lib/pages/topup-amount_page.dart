@@ -93,7 +93,7 @@ class _TopupAmountPageState extends State<TopupAmountPage> {
                   );
 
               Timer(
-                Duration(seconds: 3),
+                const Duration(seconds: 3),
                 () => Navigator.pushNamedAndRemoveUntil(
                   context,
                   '/topup-success',
