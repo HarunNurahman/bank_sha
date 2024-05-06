@@ -1,5 +1,7 @@
 import 'package:bank_sha/bloc/user/user_bloc.dart';
+import 'package:bank_sha/models/transfer_model.dart';
 import 'package:bank_sha/models/user_model.dart';
+import 'package:bank_sha/pages/transfer-amount_page.dart';
 import 'package:bank_sha/pages/widgets/custom-button.dart';
 import 'package:bank_sha/pages/widgets/custom-textfield.dart';
 import 'package:bank_sha/pages/widgets/transfer-recent-user_item.dart';
@@ -45,7 +47,14 @@ class _TransferPageState extends State<TransferPage> {
               padding: const EdgeInsets.all(24.0),
               child: CustomButton(
                 text: 'Continue',
-                ontap: () => Navigator.pushNamed(context, '/transfer-amount'),
+                ontap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TransferAmountPage(
+                      data: TransferModel(sendTo: selectedUser?.username),
+                    ),
+                  ),
+                ),
               ),
             )
           : null,
@@ -105,7 +114,19 @@ class _TransferPageState extends State<TransferPage> {
               if (state is UserSuccess) {
                 return Column(
                   children: state.users
-                      .map((user) => TransferRecentUserItem(user: user))
+                      .map(
+                        (user) => GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TransferAmountPage(
+                                data: TransferModel(sendTo: user.username),
+                              ),
+                            ),
+                          ),
+                          child: TransferRecentUserItem(user: user),
+                        ),
+                      )
                       .toList(),
                 );
               }
