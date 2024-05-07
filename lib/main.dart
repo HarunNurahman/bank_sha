@@ -1,6 +1,5 @@
 import 'package:bank_sha/bloc/auth/auth_bloc.dart';
 import 'package:bank_sha/bloc/user/user_bloc.dart';
-import 'package:bank_sha/pages/mobile-data-package_page.dart';
 import 'package:bank_sha/pages/mobile-data-provider_page.dart';
 import 'package:bank_sha/pages/home_page.dart';
 import 'package:bank_sha/pages/mobile-data-success_page.dart';
@@ -71,7 +70,6 @@ class MyApp extends StatelessWidget {
           '/transfer': (context) => const TransferPage(),
           '/transfer-success': (context) => const TransferSuccessPage(),
           '/mobile-data': (context) => const MobileDataPage(),
-          '/mobile-data-package': (context) => const MobileDataPackagePage(),
           '/mobile-data-success': (context) => const MobileDataSuccessPage(),
         },
       ),

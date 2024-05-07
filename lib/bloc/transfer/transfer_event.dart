@@ -7,9 +7,9 @@ sealed class TransferEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class TransferPost extends TransferEvent {
+class PostTransfer extends TransferEvent {
   final TransferModel data;
-  const TransferPost(this.data);
+  const PostTransfer(this.data);
 
   @override
   List<Object> get props => [data];

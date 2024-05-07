@@ -1,15 +1,14 @@
+import 'package:bank_sha/models/mobile-operator_model.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
 class DataProviderItem extends StatelessWidget {
-  final String imgUrl;
-  final String name;
+  final MobileOperatorModel mobileOperator;
   final bool isSelected;
 
   const DataProviderItem({
     super.key,
-    required this.imgUrl,
-    required this.name,
+    required this.mobileOperator,
     this.isSelected = false,
   });
 
@@ -31,12 +30,12 @@ class DataProviderItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset(imgUrl, height: 30),
+          Image.network(mobileOperator.thumbnail.toString(), height: 30),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                name,
+                mobileOperator.name.toString(),
                 style: blackTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: medium,
@@ -44,7 +43,7 @@ class DataProviderItem extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                'Available',
+                mobileOperator.status.toString(),
                 style: grayTextStyle.copyWith(fontSize: 12),
               ),
             ],

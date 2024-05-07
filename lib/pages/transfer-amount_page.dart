@@ -229,7 +229,7 @@ class _TransferAmountPageState extends State<TransferAmountPage> {
                             pin = authState.user.pin!;
                           }
                           context.read<TransferBloc>().add(
-                                TransferPost(
+                                PostTransfer(
                                   widget.data.copyWith(
                                     pin: pin,
                                     amount: amountController.text
