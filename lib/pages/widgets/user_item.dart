@@ -1,10 +1,10 @@
+import 'package:bank_sha/models/user_model.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 
 class UserItem extends StatelessWidget {
-  final String imgUrl;
-  final String username;
-  const UserItem({super.key, required this.imgUrl, required this.username});
+  final UserModel user;
+  const UserItem({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +26,15 @@ class UserItem extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: AssetImage(imgUrl),
+                image: user.profilePicture == null
+                    ? const AssetImage('assets/images/img_profile.png')
+                    : NetworkImage(user.profilePicture!) as ImageProvider,
                 fit: BoxFit.cover,
               ),
             ),
           ),
           Text(
-            '@$username',
+            '@${user.username}',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,

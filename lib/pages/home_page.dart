@@ -1,4 +1,8 @@
 import 'package:bank_sha/bloc/auth/auth_bloc.dart';
+import 'package:bank_sha/bloc/transaction/transaction_bloc.dart';
+import 'package:bank_sha/bloc/user/user_bloc.dart';
+import 'package:bank_sha/models/transfer_model.dart';
+import 'package:bank_sha/pages/transfer-amount_page.dart';
 import 'package:bank_sha/pages/widgets/blog_item.dart';
 import 'package:bank_sha/pages/widgets/latest-transaction_item.dart';
 import 'package:bank_sha/pages/widgets/service_item.dart';
@@ -358,39 +362,26 @@ class HomePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: whiteColor,
             ),
-            child: const Column(
-              children: [
-                LatestTransactionItem(
-                  iconUrl: 'assets/icons/ic_transaction_topup.png',
-                  title: 'Top Up',
-                  dateTime: 'Yesterday',
-                  value: '500000',
-                ),
-                LatestTransactionItem(
-                  iconUrl: 'assets/icons/ic_transaction_reward.png',
-                  title: 'Reward',
-                  dateTime: '11 Sep 2023',
-                  value: '20000',
-                ),
-                LatestTransactionItem(
-                  iconUrl: 'assets/icons/ic_transaction_withdraw.png',
-                  title: 'Withdraw',
-                  dateTime: '2 Sep 2023',
-                  value: '100000',
-                ),
-                LatestTransactionItem(
-                  iconUrl: 'assets/icons/ic_transaction_transfer.png',
-                  title: 'Transfer',
-                  dateTime: '27 Aug 2023',
-                  value: '1200000',
-                ),
-                LatestTransactionItem(
-                  iconUrl: 'assets/icons/ic_transaction_shopping.png',
-                  title: 'Tokopedia',
-                  dateTime: '9 Jul 2023',
-                  value: '50000',
-                ),
-              ],
+            child: BlocProvider(
+              create: (context) => TransactionBloc()..add(GetTransaction()),
+              child: BlocBuilder<TransactionBloc, TransactionState>(
+                builder: (context, state) {
+                  if (state is TransactionSuccess) {
+                    return Column(
+                      children: state.transactions
+                          .map(
+                            (transaction) => LatestTransactionItem(
+                              transactionData: transaction,
+                            ),
+                          )
+                          .toList(),
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(color: blueColor),
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -413,27 +404,40 @@ class HomePage extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           // Send again list
-          const SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                UserItem(
-                  imgUrl: 'assets/images/img_friend-1.png',
-                  username: 'yuanita',
-                ),
-                UserItem(
-                  imgUrl: 'assets/images/img_friend-2.png',
-                  username: 'jani',
-                ),
-                UserItem(
-                  imgUrl: 'assets/images/img_friend-3.png',
-                  username: 'urip',
-                ),
-                UserItem(
-                  imgUrl: 'assets/images/img_friend-4.png',
-                  username: 'musa',
-                ),
-              ],
+          BlocProvider(
+            create: (context) => UserBloc()..add(GetRecentUser()),
+            child: BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                if (state is UserSuccess) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: state.users
+                          .map(
+                            (list) => GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TransferAmountPage(
+                                      data: TransferModel(
+                                        sendTo: list.username,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: UserItem(user: list),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(color: blueColor),
+                );
+              },
             ),
           )
         ],
