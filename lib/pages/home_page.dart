@@ -1,4 +1,5 @@
 import 'package:bank_sha/bloc/auth/auth_bloc.dart';
+import 'package:bank_sha/bloc/tip/tip_bloc.dart';
 import 'package:bank_sha/bloc/transaction/transaction_bloc.dart';
 import 'package:bank_sha/bloc/user/user_bloc.dart';
 import 'package:bank_sha/models/transfer_model.dart';
@@ -459,31 +460,23 @@ class HomePage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          const Wrap(
-            spacing: 32,
-            runSpacing: 17,
-            children: [
-              BlogItem(
-                imgUrl: 'assets/images/img_tips-1.png',
-                title: 'Best Tips for Using a Credit Card',
-                url: 'https://buildwithangga.com/',
-              ),
-              BlogItem(
-                imgUrl: 'assets/images/img_tips-2.png',
-                title: 'Spot the Good Pie of Finance Model',
-                url: '',
-              ),
-              BlogItem(
-                imgUrl: 'assets/images/img_tips-3.png',
-                title: 'Great Hack to Get Better Advices',
-                url: '',
-              ),
-              BlogItem(
-                imgUrl: 'assets/images/img_tips-4.png',
-                title: 'Save More Penny Buy This Instead',
-                url: '',
-              ),
-            ],
+          BlocProvider(
+            create: (context) => TipBloc()..add(GetTip()),
+            child: BlocBuilder<TipBloc, TipState>(
+              builder: (context, state) {
+                if (state is TipSuccess) {
+                  return Wrap(
+                    spacing: 32,
+                    runSpacing: 17,
+                    children:
+                        state.tips.map((tip) => BlogItem(tips: tip)).toList(),
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(color: blueColor),
+                );
+              },
+            ),
           ),
         ],
       ),

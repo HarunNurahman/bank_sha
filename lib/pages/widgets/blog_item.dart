@@ -1,25 +1,22 @@
+import 'package:bank_sha/models/tip_model.dart';
 import 'package:bank_sha/shared/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BlogItem extends StatelessWidget {
-  final String imgUrl;
-  final String title;
-  final String url;
+  final TipModel tips;
   const BlogItem({
     super.key,
-    required this.imgUrl,
-    required this.title,
-    required this.url,
+    required this.tips
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (await canLaunchUrl(Uri.parse(url))) {
-          launchUrl(Uri.parse(url));
+        if (await canLaunchUrl(Uri.parse(tips.url!))) {
+          launchUrl(Uri.parse(tips.url!));
         }
       },
       child: Container(
@@ -35,8 +32,8 @@ class BlogItem extends StatelessWidget {
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(20),
               ),
-              child: Image.asset(
-                imgUrl,
+              child: Image.network(
+                tips.thumbnail.toString(),
                 width: 155,
                 height: 110,
                 fit: BoxFit.cover,
@@ -46,7 +43,7 @@ class BlogItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(
-                title,
+                tips.title.toString(),
                 style: blackTextStyle.copyWith(fontWeight: medium),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
